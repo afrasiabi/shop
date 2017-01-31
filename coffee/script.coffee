@@ -48,6 +48,13 @@ class GoodManager
     @node = node
     @countElement = countElement
     @cart = []
+    @goods_page = document.getElementById("goods-page")
+    @cart_page = document.getElementById("cart-page")
+    @_basketClickEvent()
+    @viewModel = {
+      shouldShowPage: ko.observable("goods") 
+    }
+    ko.applyBindings(@viewModel);
 
   addGood: (goodInfo) ->
     goodElement = @_makeGoodElement(goodInfo)
@@ -79,14 +86,34 @@ class GoodManager
     countElement = @countElement
     goodElement.querySelector(".add-to-cart").addEventListener "click", (event) ->
       @style.backgroundColor = "gray"
-
       for item in cart
         if item.id is goodInfo.id
           return
-
       cart.push goodInfo
       countElement.innerText = cart.length
       console.log cart
+
+  _basketClickEvent: ->
+    basketIcon = document.getElementById("shBasket")
+    basketIcon.addEventListener "click", (event) =>
+      @viewModel.shouldShowPage("cart")
+      # @goods_page.style.display = "none"
+      # @cart_page.style.visibility = "visible"
+      cartHolderElement = document.getElementById("cartHolder")
+      cartHolderElement.innerHTML = ""
+      for item in @cart
+        cartInnerHTML = """
+          <div class="cart-titleBar">
+            <div class="cart-title">#{item.title.toLowerCase()}</div>
+          </div>
+          <div class="cart-priceBar">
+            <div class="cart-price">#{item.price}</div>
+          </div>
+        """
+        cartContainerElement = document.createElement "div"
+        cartContainerElement.classList.add "cartContainer"
+        cartContainerElement.innerHTML = cartInnerHTML
+        cartHolderElement.appendChild(cartContainerElement)
 
 
 goodHolderElement = document.getElementById("goodHolder")

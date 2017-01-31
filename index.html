@@ -18,17 +18,24 @@
   <div class="welcomeTxt">
     <div>Hello <b>Azadeh Afrasiabi</b></div>
   </div>
-  <div class="shoppingBasket">
+  <div class="shoppingBasket" id="shBasket">
     <img src="./assets/pics/shoppingBasketIcon.png">
   </div>
   <div class="numberOfGoods"><span id="count">0</span> Items</div>
 </div>
 <div class="containerAll" id="totalCon">
-  <div class="bestTitle">BEST SELLINGS</div>
-  <div id="goodHolder"></div>
+  <div id="goods-page" data-bind="visible: shouldShowPage() == 'goods'">
+    <div class="bestTitle">BEST SELLINGS</div>
+    <div id="goodHolder"></div>
+  </div>
+  <div id="cart-page" data-bind="visible: shouldShowPage() == 'cart'">
+    <div class="bestTitle">Cart</div>
+    <div id="cartHolder"></div>
+  </div>
   <!--<div class="goodName"></div>-->
   <!--<div class="addToBasket">ADD TO BASKET</div>-->
 </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
 <script src="./js/script.js"></script>
 </html>

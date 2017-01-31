@@ -45,6 +45,13 @@ GoodManager = (function() {
     this.node = node;
     this.countElement = countElement;
     this.cart = [];
+    this.goods_page = document.getElementById("goods-page");
+    this.cart_page = document.getElementById("cart-page");
+    this._basketClickEvent();
+    this.viewModel = {
+      shouldShowPage: ko.observable("goods")
+    };
+    ko.applyBindings(this.viewModel);
   }
 
   GoodManager.prototype.addGood = function(goodInfo) {
@@ -80,6 +87,30 @@ GoodManager = (function() {
       countElement.innerText = cart.length;
       return console.log(cart);
     });
+  };
+
+  GoodManager.prototype._basketClickEvent = function() {
+    var basketIcon;
+    basketIcon = document.getElementById("shBasket");
+    return basketIcon.addEventListener("click", (function(_this) {
+      return function(event) {
+        var cartContainerElement, cartHolderElement, cartInnerHTML, i, item, len, ref, results;
+        _this.viewModel.shouldShowPage("cart");
+        cartHolderElement = document.getElementById("cartHolder");
+        cartHolderElement.innerHTML = "";
+        ref = _this.cart;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          item = ref[i];
+          cartInnerHTML = "<div class=\"cart-titleBar\">\n  <div class=\"cart-title\">" + (item.title.toLowerCase()) + "</div>\n</div>\n<div class=\"cart-priceBar\">\n  <div class=\"cart-price\">" + item.price + "</div>\n</div>";
+          cartContainerElement = document.createElement("div");
+          cartContainerElement.classList.add("cartContainer");
+          cartContainerElement.innerHTML = cartInnerHTML;
+          results.push(cartHolderElement.appendChild(cartContainerElement));
+        }
+        return results;
+      };
+    })(this));
   };
 
   return GoodManager;
