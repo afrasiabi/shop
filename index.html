@@ -5,36 +5,66 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<div id="picView">
-</div>
-<div class="bigSale">
-  <img class="header" src="./assets/pics/s.png">
-</div>
-<div class="left-top-holder">
-  <div class="siteIcon">EASY SHOP</div>
-  <div class="siteDesc">Easy choice, Unbelievable price</div>
-</div>
-<div class="right-top-holder">
-  <div class="welcomeTxt">
-    <div>Hello <b>Azadeh Afrasiabi</b></div>
+  <div id="picView"></div>
+  <div class="bigSale">
+    <img class="header" src="./assets/pics/s.png">
   </div>
-  <div class="shoppingBasket" id="shBasket">
-    <img src="./assets/pics/shoppingBasketIcon.png">
+  <div class="left-top-holder">
+    <div class="siteIcon">EASY SHOP</div>
+    <div class="siteDesc">Easy choice, Unbelievable price</div>
   </div>
-  <div class="numberOfGoods"><span id="count">0</span> Items</div>
-</div>
-<div class="containerAll" id="totalCon">
-  <div id="goods-page" data-bind="visible: shouldShowPage() == 'goods'">
-    <div class="bestTitle">BEST SELLINGS</div>
-    <div id="goodHolder"></div>
+  <div class="right-top-holder">
+    <div class="welcomeTxt">Azadeh Afrasiabi</div>
+    <div class="shoppingBasket" id="shBasket" data-bind="click: switchShowCart">
+      <img src="./assets/pics/shoppingBasketIcon.png">
+    </div>
+    <div class="numberOfGoods"><span id="count" data-bind="text: cart().length">0</span> Items </div>
   </div>
-  <div id="cart-page" data-bind="visible: shouldShowPage() == 'cart'">
-    <div class="bestTitle">Cart</div>
-    <div id="cartHolder"></div>
+  <div class="containerAll" id="totalCon">
+    <div id="goods-page" data-bind="visible: (showCart() == false)">
+      <div class="bestTitle">BEST SELLINGS</div>
+      <div id="goodHolder" data-bind="foreach: goods">
+        <div class="goodContainer">
+          <div class="goodImageHolder">
+            <img data-bind="attr: {src: src}">
+          </div>
+          <div class="titleBar">
+            <div class="title" data-bind="text: title.toLowerCase()"></div>
+          </div>
+          <div class="priceBar">
+            <span>$</span>
+            <div class="price" data-bind="text: price"></div>
+            <div class="price-desc" data-bind="text: priceDesc"></div>
+            <button class="add-to-cart" id="addToCart" data-bind="click: selectGood"> Add To Cart </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="cart-page" data-bind="visible: showCart">
+      <div class="bestTitle">YOUR CART</div>
+      <div class="cartTable">
+        <div id="cartHolder" data-bind="foreach: cart">
+          <div class="cartContainer">
+            <div class="cartNo" data-bind="text: $index() + 1"></div>
+            <div class="cart-titleBar">
+              <div class="cart-title" data-bind="text: title.toLowerCase()"></div>
+            </div>
+            <span>$</span>
+            <div class="cart-priceBar">
+              <div class="cart-price" data-bind="text: price"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sumOfPrices">
+          <div class="total">Total</div>
+          <span>$</span>
+          <span id="sum" data-bind="text: totalPrice"></span>
+        </div>
+      </div>
+    </div>
+    <!--<div class="goodName"></div>-->
+    <!--<div class="addToBasket">ADD TO BASKET</div>-->
   </div>
-  <!--<div class="goodName"></div>-->
-  <!--<div class="addToBasket">ADD TO BASKET</div>-->
-</div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
 <script src="./js/script.js"></script>

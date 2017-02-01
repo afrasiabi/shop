@@ -26,11 +26,18 @@ body{
 }
 
 .right-top-holder{
+  z-index: 2;
   position: fixed;
   top: 0;
   right: 0;
   padding: 10px;
   float: right;
+}
+.welcomeTxt {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: bold;
 }
 
 .shoppingBasket{
@@ -108,6 +115,11 @@ body{
   margin: auto;
   text-align: center;
 }
+#cartHolder {
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
 
 .goodContainer {
   text-align: left;
@@ -123,6 +135,23 @@ body{
   transition: 300ms;
   display: inline-block;  
 }
+.cartTable{
+  box-shadow: 0 0 20px 0 rgba(0,0,0,.5);
+  background-color: white;
+  border-radius: 5px;
+  max-width: 90%;
+  margin: auto;
+
+
+}
+.cartContainer {
+  text-align: left;
+  position: relative;
+  border-bottom: 1px solid gray;
+  padding: 10px;
+  overflow: hidden;
+}
+
 
 .goodContainer:hover{
   box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
@@ -143,8 +172,20 @@ body{
   line-height: 50px;
   border-bottom: 1px solid rgba(0,0,0,.3);
 }
+.cart-titleBar{
+  text-align: center;
+  padding: 5px;
+  display: inline-block;
+  width: 50%;
+
+}
 .titleBar .title {
   text-transform: capitalize;
+}
+.cart-titleBar .cart-title{
+  text-transform: capitalize;
+  font-size: 20px;
+  font-weight: bold;
 }
 .priceBar {
   position: relative;
@@ -154,7 +195,20 @@ body{
 }
 .price {
   font-size: 18px;
+  display: inline-block;
 }
+.cart-priceBar {
+  text-align: center;
+  padding: 5px;
+  display: inline-block;
+}
+.cartNo {
+  text-align: center;
+  padding: 5px;
+  display: inline-block;
+  width: 20%;
+}
+
 
 .price-desc {
   font-size: 12px;
@@ -176,4 +230,17 @@ body{
   color: #fff;
   box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
   border: 1px solid gray; 
+}
+.sumOfPrices{
+  padding: 10px;
+  font-size: 20px;
+}
+.total{
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  margin-right: 50%;
+}
+#sum{
+  font-weight: bold;
 }

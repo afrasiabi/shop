@@ -1,123 +1,71 @@
-goods = [
+cart = ko.observableArray([])
+goods = ko.observableArray([
   {
     id: 0
     src: "./assets/pics/theree-wheel-low-800x600.jpg"
-    title: "BmwX3"
-    price: "415000000"
+    title: "Blue Navy"
+    price: 35000
     priceDesc: "Item not exist in store"
   }
   {
     id: 1
     src: "./assets/pics/mystery.jpg"
-    title: "BmwX3"
-    price: "415000000"
-    priceDesc: "Item not exist in store"
+    title: "Van"
+    price: 5200
+    priceDesc: "Item will be available in march"
   }
   {
     id: 2
-    src: "./assets/pics/bodyLotion.jpg"
-    title: "bodyLotion"
-    price: "35000"
+    src: "./assets/pics/fiat-03_copy.png"
+    title: "Old Car"
+    price: 999
     priceDesc: "Price is lower than every online shop"
   }
   {
     id: 3
-    src: "./assets/pics/coffeeMaker.JPG"
-    title: "coffeeMaker"
-    price: "400000"
+    src: "./assets/pics/surf_turf.png"
+    title: "Water Ski"
+    price: 22500
     priceDesc: "Price is discounted until 2nd, Jan"
-  }
+  }        
   {
     id: 4
-    src: "./assets/pics/handToolBox.jpg"
-    title: "handToolBox"
-    price: "260000"
+    src: "./assets/pics/cuba-sunrise.jpg"
+    title: "Pinky Pinky"
+    price: 44899
     priceDesc: "Valid through until 28 Dec"
   }
   {
     id: 5
-    src: "./assets/pics/iphone7.jpg"
-    title: "iphone7"
-    price: "3150000"
+    src: "./assets/pics/carbeaut3.jpg"
+    title: "Tiny Car"
+    price: 1200
     priceDesc: "Free shipping"
   }
-]
+])
 
-class GoodManager
-  constructor: (node, countElement) ->
-    @node = node
-    @countElement = countElement
-    @cart = []
-    @goods_page = document.getElementById("goods-page")
-    @cart_page = document.getElementById("cart-page")
-    @_basketClickEvent()
-    @viewModel = {
-      shouldShowPage: ko.observable("goods") 
-    }
-    ko.applyBindings(@viewModel);
+totalPrice = ko.observable(0)
+selectGood = (good) ->
+  for item in cart()
+    if item.id is good.id
+      return
+  cart.push good
 
-  addGood: (goodInfo) ->
-    goodElement = @_makeGoodElement(goodInfo)
-    @_setGoodEvents(goodElement, goodInfo)
-    @node.appendChild(goodElement)
+  total = 0
+  for item in cart()
+    total = total + item.price
 
-  _makeGoodElement: (goodInfo) ->
-    goodInnerHTML = """
-      <div class="goodImageHolder">
-        <img src="#{goodInfo.src}" alt="#{goodInfo.title}">
-      </div>
-      <div class="titleBar">
-        <div class="title">#{goodInfo.title.toLowerCase()}</div>
-      </div>
-      <div class="priceBar">
-        <div class="price">#{goodInfo.price}</div>
-        <div class="price-desc">#{goodInfo.priceDesc}</div>
-        <div class="add-to-cart">Add To Cart</div>
-      </div>
-    """
+  totalPrice(total)
 
-    goodContainerElement = document.createElement "div"
-    goodContainerElement.classList.add "goodContainer"
-    goodContainerElement.innerHTML = goodInnerHTML
-    return goodContainerElement
+showCart = ko.observable(false)
+switchShowCart = ->
+  showCart(not showCart())
 
-  _setGoodEvents: (goodElement, goodInfo) ->
-    cart = @cart
-    countElement = @countElement
-    goodElement.querySelector(".add-to-cart").addEventListener "click", (event) ->
-      @style.backgroundColor = "gray"
-      for item in cart
-        if item.id is goodInfo.id
-          return
-      cart.push goodInfo
-      countElement.innerText = cart.length
-      console.log cart
-
-  _basketClickEvent: ->
-    basketIcon = document.getElementById("shBasket")
-    basketIcon.addEventListener "click", (event) =>
-      @viewModel.shouldShowPage("cart")
-      # @goods_page.style.display = "none"
-      # @cart_page.style.visibility = "visible"
-      cartHolderElement = document.getElementById("cartHolder")
-      cartHolderElement.innerHTML = ""
-      for item in @cart
-        cartInnerHTML = """
-          <div class="cart-titleBar">
-            <div class="cart-title">#{item.title.toLowerCase()}</div>
-          </div>
-          <div class="cart-priceBar">
-            <div class="cart-price">#{item.price}</div>
-          </div>
-        """
-        cartContainerElement = document.createElement "div"
-        cartContainerElement.classList.add "cartContainer"
-        cartContainerElement.innerHTML = cartInnerHTML
-        cartHolderElement.appendChild(cartContainerElement)
-
-
-goodHolderElement = document.getElementById("goodHolder")
-countElement = document.getElementById("count")
-goodManager = new GoodManager goodHolderElement, countElement
-for good, index in goods
-  goodManager.addGood good
+ko.applyBindings {
+  goods: goods
+  selectGood: selectGood
+  cart: cart
+  showCart: showCart
+  switchShowCart: switchShowCart
+  totalPrice: totalPrice
+}
